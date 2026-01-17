@@ -15,7 +15,8 @@ Alternativ kannst du auch die folgende Zeile direkt in die `manifest.json` deine
 ```json
 {
   "dependencies": {
-    "com.tws.settings": "https://github.com/TheWhiteShadow4/com.tws.settings.git"
+    "com.tws.settings": "https://github.com/TheWhiteShadow4/com.tws.settings.git",
+	"com.tws.utils": "https://github.com/TheWhiteShadow4/com.tws.utils.git"
   }
 }
 ```
