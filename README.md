@@ -27,12 +27,10 @@ Alternativ kannst du auch die folgende Zeile direkt in die `manifest.json` deine
 - **Bessere UI-Komponenten** - Prakmatische Erweiterung und Verbesserung der Builtin Klassen wie Karussell oder Drehknopf Elemente
 - **Event-basierte Architektur** - Einheitliche Schittstellen für eigene Event Verarbeitung
 - **Anpassbare Formatierung** - Eigene Formatierungsfunktionen für Werteanzeige (z.B. Prozent, Auflösungsformat)
-- **Lokalisierungsunterstützung** - Integration mit TWS.Localization für mehrsprachige UI-Texte
 
 # **Weitere Features**
 - Reaktive Button Label
 - Textanzeige für Slider
-- 
 
 ## Verwendung
 
