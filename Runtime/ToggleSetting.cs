@@ -6,7 +6,7 @@ namespace TWS.Settings
 	{
 		[SerializeField] protected string playerPrefKey;
 
-		public TargetSetting targetSetting;
+		public TargetSetting targetSetting = TargetSetting.None;
 
 		[SerializeField] private bool defaultValue = false;
 
@@ -22,7 +22,7 @@ namespace TWS.Settings
 		public void InitValue()
 		{
 			value = PlayerPrefs.GetInt(playerPrefKey, defaultValue ? 1 : 0) > 0;
-			Apply();
+			Apply(value);
 		}
 
 		void OnEnable()
@@ -40,11 +40,13 @@ namespace TWS.Settings
 		public void ValueChanged(int value)
 		{
 			this.value = value > 0;
-			Apply();
+			Apply(this.value);
 			PlayerPrefs.SetInt(playerPrefKey, value);
 		}
 
-		private void Apply()
+		// Ändert die Einstellung für das TargetSetting.
+		// Kann von Unterklassen überschrieben werden für eigene Implementierungen.
+		protected virtual void Apply(bool value)
 		{
 			switch (targetSetting)
 			{
@@ -60,6 +62,7 @@ namespace TWS.Settings
 
 	public enum TargetSetting
 	{
+		None,
 		Vsync,
 		Fullscreen,
 	}
