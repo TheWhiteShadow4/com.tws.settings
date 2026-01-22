@@ -6,7 +6,7 @@ namespace TWS.Settings
 	/// Generische Settings Klasse für Integer.
 	/// Speichert den Wert in PlayerPrefs und aktualisiert die UI.
 	/// </summary>
-	public class GenericIntSetting : MonoBehaviour
+	public class GenericIntSetting : MonoBehaviour, ISetting
 	{
 		public string playerPrefKey;
 
@@ -27,10 +27,16 @@ namespace TWS.Settings
 			}
 		}
 
-		void Awake()
+		protected virtual void Awake()
 		{
 			ui = GetComponent<IntValueUI>();
 			value = PlayerPrefs.GetInt(playerPrefKey, defaultValue);
+		}
+
+		public void InitValue()
+		{
+			value = PlayerPrefs.GetInt(playerPrefKey, defaultValue);
+			ValueChanged(value);
 		}
 
 		void OnEnable()
@@ -49,6 +55,10 @@ namespace TWS.Settings
 		{
 			this.value = value;
 			PlayerPrefs.SetInt(playerPrefKey, value);
+			Apply(this.value);
 		}
+
+		// Kann von Unterklassen überschrieben werden für eigene Implementierungen.
+		protected virtual void Apply(int value) {}
 	}
 }

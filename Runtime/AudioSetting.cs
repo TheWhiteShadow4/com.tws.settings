@@ -7,18 +7,17 @@ namespace TWS.Settings
 	/// Audio Settings Klasse für Lautstärke-Regelung
 	/// Mappt 0-100 Werte zu -80 bis 0 dB für AudioMixer
 	/// </summary>
-	public class AudioSetting : MonoBehaviour
+	public class AudioSetting : MonoBehaviour, ISetting
 	{
 		[SerializeField] protected string playerPrefKey;
 
 		[Header("Audio Settings")]
 		[SerializeField] private AudioMixer audioMixer;
-		//[SerializeField] private string propertyKey;
 
 		[SerializeField] private int defaultValue = 0;
 		
 		private const int DB_MIN = -80;
-		private const int DB_MAX = 0;
+		private const int DB_MAX = 20;
 		private const int UI_MIN = 0;
 		private const int UI_MAX = 100;
 
@@ -51,11 +50,6 @@ namespace TWS.Settings
 		{
 			ui.OnValueChanged.RemoveListener(ValueChanged);
 		}
-
-		/*public int GetValue()
-		{
-			return value;//(value - DB_MIN) * (UI_MAX - UI_MIN) / (DB_MAX - DB_MIN) + UI_MIN;
-		}*/
 
 		public void ValueChanged(int value)
 		{

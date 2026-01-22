@@ -2,7 +2,12 @@ using UnityEngine;
 
 namespace TWS.Settings
 {
-	public class ToggleSetting : MonoBehaviour
+	/// <summary>
+	/// Eine Ein/Aus Einstellung.
+	/// Mappt 0-1 zu true/false und speichert den Wert in ein PlayerPref.
+	/// Kann optinal der Wert auf VSync oder Fullscreen anwenden.
+	/// </summary>
+	public class ToggleSetting : MonoBehaviour, ISetting
 	{
 		[SerializeField] protected string playerPrefKey;
 
@@ -13,7 +18,7 @@ namespace TWS.Settings
 		private bool value;
 		private IntValueUI ui;
 
-		void Awake()
+		protected virtual void Awake()
 		{
 			ui = GetComponent<IntValueUI>();
 			value = PlayerPrefs.GetInt(playerPrefKey, defaultValue ? 1 : 0) > 0;
@@ -40,8 +45,8 @@ namespace TWS.Settings
 		public void ValueChanged(int value)
 		{
 			this.value = value > 0;
-			Apply(this.value);
 			PlayerPrefs.SetInt(playerPrefKey, value);
+			Apply(this.value);
 		}
 
 		// Ändert die Einstellung für das TargetSetting.

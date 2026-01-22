@@ -38,7 +38,7 @@ namespace TWS.Settings
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
-			if (EventSystem.current.currentSelectedGameObject == selectable.gameObject)
+			if (EventSystem.current && EventSystem.current.currentSelectedGameObject == selectable.gameObject)
 			{
 				ApplyState(selected);
 			}
