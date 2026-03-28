@@ -29,6 +29,7 @@ namespace TWS.Settings
 				{
 					uiState.Disabled = value;
 				}
+				if (image == null) Awake();
 				image.color = value ? disabledColor : normalColor;
 			}
 		}

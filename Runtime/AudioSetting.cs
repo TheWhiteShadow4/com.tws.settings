@@ -9,15 +9,18 @@ namespace TWS.Settings
 	/// </summary>
 	public class AudioSetting : MonoBehaviour, ISetting
 	{
-		[SerializeField] protected string playerPrefKey;
+		public enum AudioSliderMode { Log10, Linear80, Linear100 }
 
-		[Header("Audio Settings")]
+		[SerializeField] protected string playerPrefKey;
+		[SerializeField] protected AudioSliderMode sliderMode = AudioSliderMode.Log10;
+
+        [Header("Audio Settings")]
 		[SerializeField] private AudioMixer audioMixer;
 
 		[SerializeField] private int defaultValue = 0;
 		
 		private const int DB_MIN = -80;
-		private const int DB_MAX = 20;
+		private const int DB_MAX = 0;
 		private const int UI_MIN = 0;
 		private const int UI_MAX = 100;
 
@@ -33,9 +36,8 @@ namespace TWS.Settings
 
 		public void InitValue()
 		{
-			value = PlayerPrefs.GetInt(playerPrefKey, defaultValue);
-			float logicalValue = (value - UI_MIN) * (DB_MAX - DB_MIN) / (UI_MAX - UI_MIN) + DB_MIN;
-			audioMixer.SetFloat(playerPrefKey, logicalValue);
+            value = PlayerPrefs.GetInt(playerPrefKey, defaultValue);
+            audioMixer.SetFloat(playerPrefKey, MapValue(value));
 		}
 
 		void OnEnable()
@@ -54,9 +56,19 @@ namespace TWS.Settings
 		public void ValueChanged(int value)
 		{
 			this.value = value;
-			float logicalValue = (value - UI_MIN) * (DB_MAX - DB_MIN) / (UI_MAX - UI_MIN) + DB_MIN;
-			audioMixer.SetFloat(playerPrefKey, logicalValue);
+            audioMixer.SetFloat(playerPrefKey, MapValue(value));
 			PlayerPrefs.SetInt(playerPrefKey, value);
+		}
+
+		protected virtual float MapValue(int sliderValue)
+		{
+			switch(sliderMode)
+			{
+				case AudioSliderMode.Log10: return Mathf.Log10(Mathf.Max(value / 100f, 0.0001f)) * 20;
+                case AudioSliderMode.Linear80: return -80 + value * 0.8f;
+                case AudioSliderMode.Linear100:
+                default: return -80 + value;
+            }
 		}
 	}
 } 
