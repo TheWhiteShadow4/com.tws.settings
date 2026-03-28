@@ -3,7 +3,6 @@
     "rootNamespace": "TWS.Settings",
     "references": [
         "TWS.Utils",
-        "Unity.RenderPipelines.Universal.Runtime",
         "Unity.TextMeshPro",
         "TWS.Localization"
     ],
